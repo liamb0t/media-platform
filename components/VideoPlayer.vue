@@ -1,6 +1,5 @@
 <script setup>
 
-
 const props = defineProps(['src', 'title'])
 
 const videoElement = ref(null);
@@ -12,6 +11,7 @@ const bufferbar = ref(null);
 const isBuffering = ref(null)
 const videoContainer = ref(null)
 const hover = ref(false)
+const store = useModalStore()
 
 watch(videoElement, (newVal) => {
   if (newVal) {
@@ -23,13 +23,11 @@ watch(videoElement, (newVal) => {
 
 const play = () => {
   videoElement.value.play();
-  audioElement.value.play();
   playing.value = true;
 };
 
 const pause = () => {
   videoElement.value.pause();
-  audioElement.value.pause();
   playing.value = false;
 };
 
@@ -88,49 +86,6 @@ const toggleMute = () => {
 emit('toggleMute')
 }
 
-// autoplay video when 50% of elem is visible
-let observer;
-
-onMounted(() => {
-const options = {
-  threshold: 0.5, // 50% of the item's height
-};
-
-observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting && !isGridView.value && !document.fullscreenElement) {
-      play();
-    } else {
-      pause();
-    }
-  });
-}, options);
-
-if (videoElement.value) {
-  observer.observe(videoElement.value);
-}
-});
-
-//checks if video is buffering and pauses audio
-watchEffect(() => {
-  if (currentTime.value) {
-    // Check if the video is buffering
-    isBuffering.value = videoElement.value.readyState < 3 && !videoElement.value.paused && !videoElement.value.ended;
-    if (isBuffering.value) {
-      // Pause the audio when video is buffering
-      audioElement.value.pause();
-    } else if (playing.value) {
-      // Resume the audio when video resumes
-      audioElement.value.play();
-    }
-  }
-});
-
-onBeforeUnmount(() => {
-if (observer) {
-  observer.disconnect();
-}
-});
 
 watch(() => props.isFullscreen, (newValue, oldValue) => {
 // Code to run when myProp changes
@@ -141,25 +96,37 @@ watch(() => props.mouseOver, (newValue, oldValue) => {
 props.mouseOver === true ? play() : pause()
 });
 
+//computed properties
+
+const formattedCurrentTime = computed(() => {
+  const minutes = Math.floor(currentTime.value / 60)
+  const seconds = Math.floor(currentTime.value % 60)
+  return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`
+})
+
+const formattedDuration = computed(() => {
+  const minutes = Math.floor(duration.value / 60)
+  const seconds = Math.floor(duration.value % 60)
+  return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`
+})
+
 </script>
 
 <template>
   <div class="main-container">
     <div class="video-container" ref="videoContainer">
-      <div class="loader"  v-if="isBuffering">
-        <Loader :style="'large'" />
-      </div> 
       <!-- Add event listeners for play, pause, and timeupdate -->
       <video
-        controls
         ref="videoElement"
-        :src="'_nuxt/assets/media/video/' + src"
+        :src=src
         @play="onTimeUpdate"
         @pause="onTimeUpdate"
         @timeupdate="onTimeUpdate"
         @progress="onProgress"
+        @loadedmetadata="store.setLoaded(true)"
         :preload="preload"
         loop
+        autoplay
       ></video>
       <transition name="fade">
         <div class="video-overlay" v-if="!isFullscreen || hover">
@@ -183,10 +150,7 @@ props.mouseOver === true ? play() : pause()
       </div>
      
       <div class="player-controls">
-        <div id="play-btn" @click="playing ? pause() : play()">PLAY</div>
-        <div id="pause-btn" @click="playing ? pause() : play()">PAUSE</div>
         <div class="progress-bar" ref="progressbar"></div>
-        <div class="buffer-bar" ref="bufferbar"></div> <!-- New buffer bar -->
         <input 
           type="range" 
           min="0" max="100" 
@@ -195,6 +159,13 @@ props.mouseOver === true ? play() : pause()
           @mouseover="toggleInfo"
           @mouseleave="toggleInfo"
         />
+        <div id="playback-controls"  class="flex items-center p-4">
+          <div class="mr-4 hover:cursor-pointer">
+            <img v-if="!playing" src="~assets/thumbnails/play-icon.svg" class="w-5" @click="play()"/>
+            <img v-if="playing" src="~assets/thumbnails/pause-icon.svg" class="w-5" @click="pause()"/>
+          </div>
+          <span class="text-white text-sm">{{ formattedCurrentTime }} / {{ formattedDuration }}</span>
+        </div>
       </div>
     </div>
   </div>
@@ -203,7 +174,7 @@ props.mouseOver === true ? play() : pause()
 <style scoped>
 .main-container {
 display: flex;
-height: 100%;
+height: 80vh;
 width: 100%;
 }
 .video-container {
@@ -232,8 +203,7 @@ position: absolute;
 bottom: 0;
 width: 100%;
 display: flex;
-align-items: center;
-gap: 10px;
+flex-direction: column;
 background: rgba(105, 105, 105, 0); /* Slight background to make text visible on light videos */
 z-index: 2;
 }
@@ -259,9 +229,8 @@ transition: opacity 0.1s ease; /* Smooth transition for opacity */
 z-index: 5;
 }
 .progress-bar {
-  position: absolute;
   height: 4px;
-  background-color: red;
+  background-color: rgb(126, 14, 206);
   transition: height 0.2s ease;
   z-index: 5;
 }
@@ -280,7 +249,7 @@ transition: height 0.2s ease;
 appearance: none;
 width: 15px;
 height: 15px;
-background: red; /* Change thumb color */
+background: rgb(126, 14, 206); /* Change thumb color */
 cursor: pointer;
 border-radius: 50%;
 transform: scale(0);

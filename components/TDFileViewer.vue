@@ -17,8 +17,14 @@ const store = useModalStore()
 </script>
 
 <template>
-  <model-viewer @load="store.setLoaded(true)" :src=src ar shadow-intensity="1" camera-controls touch-action="pan-y"></model-viewer>
+  <div class="w-screen h-screen">
+    <model-viewer @load="store.setLoaded(true)" :src=src ar shadow-intensity="1" camera-controls touch-action="pan-y"></model-viewer>
+  </div>
 </template>
 <style scoped>
-
+model-viewer {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
 </style>

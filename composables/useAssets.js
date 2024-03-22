@@ -10,5 +10,4 @@ export default function useAssets(asset) {
     }
 
   return getAllFiles()
-
 }

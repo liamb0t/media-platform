@@ -8,11 +8,38 @@ import TDFileViewer from '~/components/TDFileViewer.vue'
 const store = useModalStore()
 const { filePath, isLoaded, showModal } = storeToRefs(store)
 
-
+//methods and functions
 function closeModal() {
   store.closeModal()
 }
 
+function download() {
+  const url = filePath.value
+  let filename = filePath.value
+  // Current blob size limit is around 500MB for browsers
+  if (!filename) filename = url.split('\\').pop().split('/').pop();
+  fetch(url, {
+      headers: new Headers({
+        'Origin': location.origin
+      }),
+      mode: 'cors'
+    })
+    .then(response => response.blob())
+    .then(blob => {
+      let blobUrl = window.URL.createObjectURL(blob);
+      let link = document.createElement('a');
+
+      // Place the resource in the href of the link
+      link.href = blobUrl;
+      link.download = `${filename}`;
+      document.body.appendChild(link);
+      link.click()
+      document.body.removeChild(link);
+      // Revoke the Blob URL to free up resources
+      URL.revokeObjectURL(blobUrl);
+    })
+    .catch(e => console.error(e));
+}
 
 // handle file previewer
 const previewer = ref(null)
@@ -56,22 +83,27 @@ watch(() => showModal.value, (newVal, oldVal) => {
 </script>
 
 <template>  
-    <transition name="fade">
-        <div id="modal-background" class="fixed inset-0 bg-black bg-opacity-50 " @click="closeModal">
-            <div id="modal" class="flex flex-col items-center justify-center w-screen h-screen shadow-md">
-                <div id="header" class="absolute top-0 left-0 flex items-center w-full m-2">
-                    <div class="flex items-center justify-center mr-2 w-10 h-10 rounded-full hover:bg-indigo-400 hover:cursor-pointer">
-                        <img class="w-6" src="~assets/thumbnails/arrow.svg" alt="">
-                    </div>
-                    <span class="text-white">{{ filePath }}</span>
+  <transition name="fade">
+      <div id="modal-background" class="fixed inset-0 bg-black bg-opacity-80 ">
+          <div id="modal" class="flex flex-col items-center justify-center w-screen h-screen shadow-md">
+              <div id="header" class="absolute top-0 left-0 flex items-center justify-between w-full m-2 z-10">
+                <div class="flex items-center">
+                  <div @click="closeModal" class="flex items-center justify-center mr-2 w-10 h-10 rounded-full hover:bg-indigo-400 hover:bg-opacity-25 hover:cursor-pointer">
+                    <img class="w-6" src="~assets/thumbnails/arrow.svg" alt="">
+                  </div>
+                  <span class="text-white">{{ filePath }}</span>
                 </div>
-                <div id="modal-content">
-                    <span v-if="!isLoaded" class="loader"></span>
-                    <component v-if="previewer" :src="filePath" :is="previewer" />
+                <div @click="download" class="flex items-center justify-center mr-5 w-10 h-10 rounded-full hover:bg-indigo-400 hover:bg-opacity-25 hover:cursor-pointer">
+                  <img class="w-6 hover:cursor-pointer" src="~assets/thumbnails/download-icon.svg" alt="">
                 </div>
-            </div>
-        </div>
-    </transition>
+              </div>
+              <div id="modal-content">
+                  <span v-if="!isLoaded" class="loader"></span>
+                  <component v-if="previewer" :src="filePath" :is="previewer" />
+              </div>
+          </div>
+      </div>
+  </transition>
 </template>
 
 <style scoped>

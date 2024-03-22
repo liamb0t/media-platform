@@ -35,6 +35,6 @@ const openModal = () => {
   
 }
 #container:hover {
-    transform: scale(1.025);
+    transform: scale(1.015);
 }
 </style>

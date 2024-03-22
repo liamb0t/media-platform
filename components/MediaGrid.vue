@@ -23,33 +23,37 @@ const setFileName = (fileName) => {
 </script>
 
 <template>
-    <div>
-        <div class="grid" data-masonry='{ "columnWidth": 220, "itemSelector": ".grid-item" }'>
-            <div class="grid-sizer"></div>
-            <div 
-                class="grid-item" 
-                v-for="file in files" 
-                :key="file"
-            >
-                <MediaCard :src="'_nuxt' + file" @click="setFileName(file)"/>
-            </div>
+  <div>
+    <div class="grid" data-masonry='{ "columnWidth": 200, "itemSelector": ".grid-item", "fitWidth": "true", "gutter": 10}'>
+        <div 
+            class="grid-item" 
+            v-for="file in files" 
+            :key="file"
+        >
+          <MediaCard :src="'_nuxt' + file" @click="setFileName(file)"/>
         </div>
     </div>
+  </div>
 </template>
 
 <style>
-img {
-    width: 100%;
-    height: 100%;
-}
+
 .grid {
-    max-width: 1000px;
-    
+  /* center */
+  margin: 0 auto;
 }
-/* fluid 5 columns */
-.grid-sizer,
-.grid-item { width: 20%; margin-bottom: 10px}
-/* 2 columns */
-.grid-item--width2 { width: 40%; }
-.grid-item--width3 { width: 60%; }
+
+/* clearfix */
+.grid:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+/* ---- grid-item ---- */
+
+.grid-item {
+  width: 200px;
+  margin-bottom: 10px;
+}
 </style>
