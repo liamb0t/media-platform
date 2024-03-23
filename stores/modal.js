@@ -4,6 +4,7 @@ export const useModalStore = defineStore('modal', {
   state: () => ({
     showModal: false,
     filePath: null,
+    fileType: null,
     isLoaded: false,
   }),
   actions: {

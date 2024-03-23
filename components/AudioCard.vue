@@ -28,30 +28,30 @@ watch(isHovering, (newValue) => {
     
 <div @mouseover="isHovering=true" @mouseleave="isHovering=false" class="flex items-center justify-center bg-indigo-400 p-5 rounded-lg">
     <div class="flex flex-col items-center justify-center">
-        <span id="audio-wave" class="transition-opacity duration-150 ease-in-out" :class="{'opacity-100 delay-1000': isHovering, 'opacity-0': !isHovering}"></span>
-        <img class="w-20 h-20 transition-opacity duration-250 ease-in-out" :class="{'opacity-0 delay-1000': isHovering, 'opacity-100': !isHovering}" src="~assets/thumbnails/audio-thumbnail.svg">
-        <span class="text-xs w-full mt-2 text-center">{{ title }}</span>
+        <span id="audio-wave" class="scale-75 transition-opacity duration-150 ease-in-out" :class="{'opacity-100 delay-1000': isHovering, 'opacity-0': !isHovering}"></span>
+        <div class="flex flex-col items-center transition-opacity duration-250 ease-in-out" :class="{'opacity-0 delay-1000': isHovering, 'opacity-100': !isHovering}">
+          <img class="w-10 h-10" src="~assets/thumbnails/audio-thumbnail.svg">
+          <span class="text-xs w-full mt-2 text-center">{{ title }}</span>
+        </div>
+       
     </div>
     <audio ref="audioElement" :src="src" alt="image" class="w-full h-full object-cover" />
 </div>
-
-
 </template>
 
 <style scoped>
 
 #audio-wave {
     position: absolute;
-    margin-bottom: 20px;
     width: 75px;
     height: 40px;
     background-repeat: no-repeat;
-    background-image: linear-gradient(#000000 50px, transparent 0),
-                      linear-gradient(#000000 50px, transparent 0),
-                      linear-gradient(#000000 50px, transparent 0),
-                      linear-gradient(#000000 50px, transparent 0),
-                      linear-gradient(#000000 50px, transparent 0),
-                      linear-gradient(#000000 50px, transparent 0);
+    background-image: linear-gradient(#160028 50px, transparent 0),
+                      linear-gradient(#160028 50px, transparent 0),
+                      linear-gradient(#160028 50px, transparent 0),
+                      linear-gradient(#160028 50px, transparent 0),
+                      linear-gradient(#160028 50px, transparent 0),
+                      linear-gradient(#160028 50px, transparent 0);
     background-position: 0px center, 15px center, 30px center, 45px center, 60px center, 75px center, 90px center;
     animation: rikSpikeRoll 0.65s linear infinite alternate;
   }

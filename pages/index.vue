@@ -21,5 +21,3 @@ const { showModal } = storeToRefs(store)
     </div>
     <Modal v-show="showModal" />
 </template>
-
-

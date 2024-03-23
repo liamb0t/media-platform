@@ -6,7 +6,7 @@ import ImageViewer from '~/components/ImageViewer.vue'
 import TDFileViewer from '~/components/TDFileViewer.vue'
 
 const store = useModalStore()
-const { filePath, isLoaded, showModal } = storeToRefs(store)
+const { filePath, fileType, isLoaded, showModal } = storeToRefs(store)
 
 //methods and functions
 function closeModal() {
@@ -45,16 +45,15 @@ function download() {
 const previewer = ref(null)
  
 function updateFilePreviewer() {
-  const extension = filePath.value?.split('.').pop();
    
-  if (['mp3', 'wav', 'ogg'].includes(extension)) {
+  if (fileType.value === 'audio') {
     previewer.value = AudioPlayer;
-  } else if (['mp4', 'webm', 'ogg'].includes(extension)) {
+  } else if (fileType.value === 'video') {
     previewer.value = VideoPlayer;
-  } else if (['jpg', 'jpeg', 'png', 'gif'].includes(extension)) {
-    previewer.value = ImageViewer;
-  } else {
+  } else if (fileType.value === '3D') {
     previewer.value = TDFileViewer;
+  } else {
+    previewer.value = ImageViewer;
   }
 }
 // watch for changes in selected file and toggle appropriate previewer

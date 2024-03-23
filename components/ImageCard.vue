@@ -9,6 +9,6 @@ const props = defineProps(['src', 'title'])
     <div class="flex items-center">
        
     </div>
-    <img :src="src" class="w-full h-full object-cover rounded-lg"/>
+    <img :src=src class="w-full h-full object-cover rounded-lg"/>
 </div>
 </template>

@@ -1,31 +1,29 @@
 <script setup>
 
-const props = defineProps(['src'])
-
-const fileType = props.src.split('.').pop()
-const fileName = props.src.split('/').pop()
-
-const isAudio = fileType === 'mp3' || fileType === 'wav' || fileType === 'ogg'
-const isVideo = fileType === 'mp4' || fileType === 'webm' || fileType === 'ogg'
-const isImage = fileType === 'jpg' || fileType === 'jpeg' || fileType === 'png' || fileType === 'gif'
-const is3DFile = fileType === 'glb' || fileType === 'gltf'
+const props = defineProps({
+  file: {
+    type: Object,
+    required: true
+  }
+})
 
 // handle modal and file previewer
 const store = useModalStore()
 
 const openModal = () => {
   store.openModal()
-  store.setFileName(props.src)
+  store.filePath = props.file.src
+  store.fileType = props.file.fileType
 };
 
 </script>
 
 <template>
-    <div id="container" @click="openModal()">
-        <TDFileThumbnail v-if="is3DFile" :src="src" :title="fileName"/>
-        <ImageCard v-if="isImage" :src="src" :title="fileName"/>
-        <AudioCard v-if="isAudio" :src="src" :title="fileName"/>
-        <VideoCard v-if="isVideo" :src="src" :title="fileName"/>
+    <div class="z-10" id="container" @click="openModal()">
+      <ImageCard v-if="file.fileType==='image'" :src="file.src" />
+      <VideoCard v-if="file.fileType==='video'" :src="file.src" />
+      <AudioCard v-if="file.fileType==='audio'" :src="file.src" :title="file.title"/>
+      <TDFileThumbnail v-if="file.fileType==='3D'" :src="file.src" :title="file.title"/>
     </div>
 </template>
 

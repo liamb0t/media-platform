@@ -1,19 +1,12 @@
 <script setup>
 
 const searchQuery = ref('')
+const router = useRouter()
 
-const onInput = () => {
-  if (searchQuery.value.trim() === '') {
-        suggestions.value = [];
-        isDropdownVisible.value = false
-      }
-  else {
-    isDropdownVisible.value = true
-    debouncedWatch()
-  }
+const handleEnterPress = () => {
+  if (searchQuery.value === '') return
+  router.push({ query: { query: searchQuery.value } })
 }
-
-watch(searchQuery, onInput);
 
 </script>
 
@@ -29,6 +22,7 @@ watch(searchQuery, onInput);
         v-model="searchQuery"
         placeholder="Search media"
         @focus="handleInputFocus"
+        @keyup.enter="handleEnterPress"
         />
       </div>
     </div>
@@ -42,13 +36,11 @@ watch(searchQuery, onInput);
 }
 .main-container {
   width: 50%;
-  z-index: 900;
 }
 
 .search-bar-container-inner {
 display: flex;
 align-items: center;
-background-color: var(--color-background);
 z-index: 990;
 }
 .search-icon, .back-icon {
@@ -67,10 +59,13 @@ input {
   width: 100%;
   border: none;
   outline: none;
-  color: var(--color-text);
 }
 input::placeholder {
   font-weight: 100; 
+}
+input[type="text"] {
+  color: #9ca3b0;
+  font-weight: 100;
 }
 .filter-icon {
   width: 1.5rem;

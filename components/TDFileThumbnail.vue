@@ -22,9 +22,9 @@ const isHovering = ref(false)
         <img class="w-3/5" src="~assets/thumbnails/3d-thumbnail.svg" alt="">
         <span class="text-xs w-full mt-3 text-center">{{ title }}</span>
     </div>
-
+    
     <div class="absolute top-0 left-0 flex items-center justify-center w-full h-full transition-opacity duration-500 ease-in-out delay-100" :class="{'opacity-0': !isHovering, 'opacity-100': isHovering}">
-      <model-viewer id="transform" :src=src shadow-intensity="1" auto-rotate touch-action="pan-y">
+      <model-viewer v-if="isHovering" id="transform" :src=src shadow-intensity="1" auto-rotate touch-action="pan-y">
       </model-viewer>
     </div>
   </div>
