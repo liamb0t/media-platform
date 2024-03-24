@@ -21,7 +21,7 @@ const onModelProgress = (event) => {
 }
 
 const progressWidth = computed(() => {
-  return `${(progress.value * 100)/2}%`
+  return `${(progress.value * 100)}%`
 })
 
 </script>
