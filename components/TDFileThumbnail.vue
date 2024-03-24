@@ -13,22 +13,31 @@ useHead({
 const props = defineProps(['src', 'title'])
 const isHovering = ref(false)
 const progress = ref(0)
+const isLoaded = ref(false)
+const count = ref(0)
 
 // listen for progress event
 
 const onModelProgress = (event) => {
   progress.value = event.detail.totalProgress
+
+  if (event.detail.totalProgress === 1 && count.value < 2) {
+    count.value += 1
+  }
 }
 
 const progressWidth = computed(() => {
+
+  if (count.value === 2) {
+    isLoaded.value = true
+  }
   return `${(progress.value * 100)}%`
 })
-
 </script>
 
 <template>
   <div id="container" @mouseover="isHovering=true" @mouseleave="isHovering=false" class="flex items-center justify-center bg-indigo-500 p-5 rounded-lg">
-
+    <h1>{{ count }}</h1>
     <div class="flex items-center justify-center flex-col transition-opacity duration-150 ease-in delay-100" :class="{'opacity-0': isHovering, 'opacity-100': !isHovering}">
         <img class="w-3/5 media" src="~assets/thumbnails/3d-thumbnail.svg" alt="">
         <span class="text-xs w-full mt-3 text-center">{{ title }}</span>
@@ -36,7 +45,7 @@ const progressWidth = computed(() => {
     <div class="absolute top-0 left-0 flex items-center justify-center w-full h-full transition-opacity duration-500 ease-in-out delay-100" :class="{'opacity-0': !isHovering, 'opacity-100': isHovering}">
       <model-viewer @progress="onModelProgress" v-if="isHovering" id="transform" :src=src shadow-intensity="1" auto-rotate touch-action="pan-y">
         <div class="progress-bar-container" slot="progress-bar">
-          <div class="progress-bar">
+          <div v-if="!isLoaded" class="progress-bar">
             <div class="progress-bar-inner" :style="{width: progressWidth}"></div>
           </div>
         </div>
