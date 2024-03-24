@@ -11,7 +11,7 @@ const { showModal } = storeToRefs(store)
 
 <template>
     <div class="flex pt-5" id="container">
-        <div id="navbar" class="hidden">
+        <div id="navbar" class="hidden md:visible">
             <Navbar @open-sidebar="handleSidebar" />
         </div>
         
@@ -23,20 +23,22 @@ const { showModal } = storeToRefs(store)
         </transition>
 
         <transition name="slide">
-            <div v-show="openedSidebar" class="fixed h-full z-50 bg-zinc-900 flex flex-col mr-6 pl-4 w-2/6 md:hidden" id="sidebar-secondary">
+            <div class="fixed h-full z-50 bg-zinc-900 hidden flex-col mr-6 pl-4 w-2/6" id="sidebar-secondary">
                 <h1 class="text-indigo-500 text text-3xl">MOXY</h1>
                 <Sidebar class="mt-10"/>
             </div>
         </transition>
       
-        <div class="relative bg-zinc-800 rounded-3xl p-4 transition-all duration-500 ease-in-out" id="grid-container" :class="{'w-9/12': openedSidebar, 'w-full': !openedSidebar}">
+        <div class="relative bg-zinc-800 rounded-3xl p-4 transition-all duration-500 ease-in-out min-h-screen" id="grid-container" :class="{'w-9/12': openedSidebar, 'w-full': !openedSidebar}">
             <div id="toolbar" class="flex items-center justify-between mb-5">
                 <SearchBar />
                 <Filter />
-            </div>
+            </div>  
 
-            <div class="fixed h-4/6 w-full">
-                <div id="panel-btn" @click="handleSidebar" class="absolute hover:cursor-pointer bg-white w-1 h-5 left-0 top-1/2 bottom-0"></div>
+            <div id="panel-container" class="fixed h-4/6 w-full">
+                <div id="panel-btn" @click="handleSidebar" class="absolute hover:cursor-pointer w-6 h-8 -left-4 top-1/2 bottom-0 p-2">
+                    <div class="w-1 h-6 bg-white"></div>
+                </div>
             </div>  
             <MediaGrid :sizeChange="openedSidebar" />
         </div>
@@ -72,6 +74,9 @@ const { showModal } = storeToRefs(store)
 }
 #grid-container {
     width: 100%;
+}
+#panel-container {
+    display: none;
 }
 }
 </style>

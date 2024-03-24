@@ -37,6 +37,9 @@
     </ul>
 </template>
 <style scoped>
+li {
+    margin-bottom: 0.5rem;
+}
 img {
     width: 1.5rem;
     height: 1.5rem;

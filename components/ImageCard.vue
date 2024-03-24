@@ -21,10 +21,8 @@ function handleMouseLeave() {
 
 <template>
 <div @mouseover="handleMouseOver" @mouseleave="handleMouseLeave">
-    <div class="flex items-center">
-       
-    </div>
     <img :src=src class="w-full h-full object-cover rounded-lg media transition-transform duration-100" :class="{'scale-[1.7] z-50': isHovering}"/>
 </div>
 </template>
+
 

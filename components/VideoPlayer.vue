@@ -3,7 +3,7 @@
 const props = defineProps(['src', 'title'])
 
 const videoElement = ref(null);
-const playing = ref(true);
+const playing = ref(false);
 const currentTime = ref(0);
 const duration = ref(0);
 const progressbar = ref(null)
@@ -311,17 +311,17 @@ cursor: pointer;
 #volume-slider {
   position: relative;
   width: 5rem;
-  color: white;
   background-color: white;
   height: 3px;
 }
+
 
 #volume-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
   width: 10px;
   height: 10px;
-  background: white;
+  background: rgb(255, 255, 255);
   cursor: pointer;
   border-radius: 50%;
 }
