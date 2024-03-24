@@ -17,12 +17,13 @@ const progress = ref(0)
 // listen for progress event
 
 const onModelProgress = (event) => {
-  progress.value = event.detail.totalProgress
-  console.log(progress.value)
+  progress.value += event.detail.totalProgress
 }
 
 const progressWidth = computed(() => {
-  return `${progress.value * 100}%`
+  if (progress.value >= 1) {
+    return `${(progress.value * 100)/2}%`
+  }
 })
 
 </script>
@@ -37,7 +38,7 @@ const progressWidth = computed(() => {
     <div class="absolute top-0 left-0 flex items-center justify-center w-full h-full transition-opacity duration-500 ease-in-out delay-100" :class="{'opacity-0': !isHovering, 'opacity-100': isHovering}">
       <model-viewer @progress="onModelProgress" v-if="isHovering" id="transform" :src=src shadow-intensity="1" auto-rotate touch-action="pan-y">
         <div class="progress-bar-container" slot="progress-bar">
-          <div v-if="!progress===1" class="progress-bar">
+          <div v-if="!progress===2" class="progress-bar">
             <div class="progress-bar-inner" :style="{width: progressWidth}"></div>
           </div>
         </div>
