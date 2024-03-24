@@ -104,10 +104,9 @@ watch(() => router.currentRoute.value.query, (newQuery) => {
     <div class="grid">
       <div 
           class="grid-item" 
-          v-for="file in files"
-          :key="file"
+          v-for="(file, index) in files"
       >
-      <MediaCard :file=file />
+        <MediaCard :file=file :key="index"/>
       </div>
     </div>
   </div>

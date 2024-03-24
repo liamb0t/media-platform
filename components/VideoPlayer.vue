@@ -132,7 +132,6 @@ const formattedDuration = computed(() => {
         @loadedmetadata="store.setLoaded(true)"
         :preload="preload"
         loop
-        autoplay
       ></video>
       <transition name="fade">
         <div class="video-overlay" v-if="!isFullscreen || hover">
@@ -156,7 +155,7 @@ const formattedDuration = computed(() => {
       </div>
      
       <div class="player-controls flex flex-row items-center justify-between">
-        <div id="left-container">
+        <div id="left-container" class="w-full">
           <div class="progress-bar" ref="progressbar"></div>
             <input 
               type="range" 
@@ -169,9 +168,9 @@ const formattedDuration = computed(() => {
           <div id="playback-controls" class="flex items-center p-4">
             <div class="mr-4 hover:cursor-pointer">
               <img v-if="playing===false" src="~assets/thumbnails/play-icon.svg" class="w-5" @click="play()"/>
-              <img v-if="playing===true" src="~assets/thumbnails/pause-icon.svg" class="w-5" @click="pause()"/>
+              <img v-else src="~assets/thumbnails/pause-icon.svg" class="w-5" @click="pause()"/>
             </div>
-            <div class="flex items-center w-8">
+            <div class="flex items-center mr-4">
               <img class="w-5" src="~assets/thumbnails/sound-icon.svg"/>
               <input 
                 type="range" 
@@ -186,7 +185,7 @@ const formattedDuration = computed(() => {
           </div>
         </div>
         <div id="right-container">
-          <div class="w-5 mr-5">
+          <div class="w-5 mr-5 hover:cursor-pointer">
             <img 
               src="~assets/thumbnails/fullscreen-icon.svg" 
               @click="toggleFullScreen"
@@ -253,8 +252,10 @@ background: transparent; /* Make the default background transparent */
 opacity: 1; /* Initially hidden */
 transition: opacity 0.1s ease; /* Smooth transition for opacity */
 z-index: 5;
+height: 6px;
 }
 .progress-bar {
+  position: absolute;
   height: 4px;
   background-color: rgb(126, 14, 206);
   transition: height 0.2s ease;
@@ -305,6 +306,24 @@ z-index: 1;
 
 .player-controls input:hover {
 cursor: pointer;
+}
+
+#volume-slider {
+  position: relative;
+  width: 5rem;
+  color: white;
+  background-color: white;
+  height: 3px;
+}
+
+#volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 10px;
+  height: 10px;
+  background: white;
+  cursor: pointer;
+  border-radius: 50%;
 }
 
 .video-overlay {

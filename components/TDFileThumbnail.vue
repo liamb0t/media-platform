@@ -37,7 +37,6 @@ const progressWidth = computed(() => {
 
 <template>
   <div id="container" @mouseover="isHovering=true" @mouseleave="isHovering=false" class="flex items-center justify-center bg-indigo-500 p-5 rounded-lg">
-    <h1>{{ count }}</h1>
     <div class="flex items-center justify-center flex-col transition-opacity duration-150 ease-in delay-100" :class="{'opacity-0': isHovering, 'opacity-100': !isHovering}">
         <img class="w-3/5 media" src="~assets/thumbnails/3d-thumbnail.svg" alt="">
         <span class="text-xs w-full mt-3 text-center">{{ title }}</span>
@@ -69,7 +68,7 @@ const progressWidth = computed(() => {
 }
 
 .progress-bar {
-  width: 75%;
+  width: 50%;
   height: 4.8px;
   display: inline-block;
   position: relative;
