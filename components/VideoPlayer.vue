@@ -230,7 +230,6 @@ position: absolute;
 bottom: 0;
 width: 100%;
 display: flex;
-flex-direction: column;
 background: rgba(105, 105, 105, 0); /* Slight background to make text visible on light videos */
 z-index: 2;
 }

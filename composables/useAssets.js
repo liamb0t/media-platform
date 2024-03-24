@@ -14,12 +14,11 @@ export default function useAssets() {
     ]
 
     const threeDLinks = [
-        '_nuxt/assets/media/3d/3D_Isometric_BEDROOM.glb',
-        '_nuxt/assets/media/3d/bmw_e24_635csi.glb',
-        '_nuxt/assets/media/3d/bmw_e39_free.glb',
-        '_nuxt/assets/media/3d/cute_breakfast.glb',
-        '_nuxt/assets/media/3d/potions.glb',
-        
+        'public/media/3d/3D_Isometric_BEDROOM.glb',
+        'public/media/3d/bmw_e24_635csi.glb',
+        'public/media/3d/bmw_e39_free.glb',
+        'public/media/3d/cute_breakfast.glb',
+        'public/media/3d/potions.glb',
     ]
 
     async function getImage() {
