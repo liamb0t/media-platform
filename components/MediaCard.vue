@@ -28,11 +28,5 @@ const openModal = () => {
 </template>
 
 <style scoped>  
-#container {
-  transition: transform 0.3s ease;
-  
-}
-#container:hover {
-    transform: scale(1.015);
-}
+
 </style>

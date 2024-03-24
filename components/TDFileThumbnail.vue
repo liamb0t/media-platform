@@ -16,10 +16,10 @@ const isHovering = ref(false)
 </script>
 
 <template>
-  <div id="container" @mouseover="isHovering=true" @mouseleave="isHovering=false" class="flex items-center justify-center bg-indigo-400 p-5 rounded-lg">
+  <div id="container" @mouseover="isHovering=true" @mouseleave="isHovering=false" class="flex items-center justify-center bg-indigo-500 p-5 rounded-lg">
 
     <div class="flex items-center justify-center flex-col transition-opacity duration-150 ease-in delay-100" :class="{'opacity-0': isHovering, 'opacity-100': !isHovering}">
-        <img class="w-3/5" src="~assets/thumbnails/3d-thumbnail.svg" alt="">
+        <img class="w-3/5 media" src="~assets/thumbnails/3d-thumbnail.svg" alt="">
         <span class="text-xs w-full mt-3 text-center">{{ title }}</span>
     </div>
     

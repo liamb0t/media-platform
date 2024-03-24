@@ -22,32 +22,37 @@ export default function useAssets() {
         
     ]
 
-    function getImage() {
-        let size = Math.random() * 3 + 1;
-        let width = Math.random() * 110 + 100;
-        width = Math.round(width * size);
-        let height = Math.round(140 * size);
-        let src = `https://picsum.photos/${width}/${height}`;
+    async function getImage() {
+        // Use the API to fetch a list of videos. This is a pseudo-code example.
+        const response = await fetch('https://pixabay.com/api/?key=43031433-029941f53faf5840b7cb720a5&q=cyberpunk&image_type=photo', {
+            
+        });
+        const data = await response.json();
+
+        // Randomly select one video from the fetched list.
+        const randomIndex = Math.floor(Math.random() * data.hits.length);
+        const image = data.hits[randomIndex];
+       
         return {
             'fileType': 'image',
-            'src': src
+            'src': image.largeImageURL // Selecting the first video link. Adjust as needed.
         };
     }
 
     async function getVideoItem() {
         // Use the API to fetch a list of videos. This is a pseudo-code example.
-        const response = await fetch('https://api.pexels.com/videos/search?query=animation&per_page=10', {
-            headers: {
-            Authorization: 'nhxZiVRJeRwzuqRkRfPYBZx84HJMDmUkaOmpyvdf0zjvzR0lsu0o1IJc'
-            }
+        const response = await fetch('https://pixabay.com/api/videos/?key=43031433-029941f53faf5840b7cb720a5&q=cyberpunk', {
+            
         });
         const data = await response.json();
+
         // Randomly select one video from the fetched list.
-        const randomIndex = Math.floor(Math.random() * data.videos.length);
-        const video = data.videos[randomIndex];
+        const randomIndex = Math.floor(Math.random() * data.hits.length);
+        const video = data.hits[randomIndex];
+
         return {
             'fileType': 'video',
-            'src': video.video_files[0].link // Selecting the first video link. Adjust as needed.
+            'src': video.videos.medium.url // Selecting the first video link. Adjust as needed.
         };
     }
 
@@ -72,7 +77,6 @@ export default function useAssets() {
             'title': tdobject.split('/').pop(),
         };
     }
-
 
     async function getAllFiles() {
         let itemsPromises = [];

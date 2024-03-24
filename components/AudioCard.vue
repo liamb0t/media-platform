@@ -26,16 +26,16 @@ watch(isHovering, (newValue) => {
 
 <template>
     
-<div @mouseover="isHovering=true" @mouseleave="isHovering=false" class="flex items-center justify-center bg-indigo-400 p-5 rounded-lg">
-    <div class="flex flex-col items-center justify-center">
-        <span id="audio-wave" class="scale-75 transition-opacity duration-150 ease-in-out" :class="{'opacity-100 delay-1000': isHovering, 'opacity-0': !isHovering}"></span>
-        <div class="flex flex-col items-center transition-opacity duration-250 ease-in-out" :class="{'opacity-0 delay-1000': isHovering, 'opacity-100': !isHovering}">
-          <img class="w-10 h-10" src="~assets/thumbnails/audio-thumbnail.svg">
-          <span class="text-xs w-full mt-2 text-center">{{ title }}</span>
-        </div>
-       
-    </div>
-    <audio ref="audioElement" :src="src" alt="image" class="w-full h-full object-cover" />
+<div @mouseover="isHovering=true" @mouseleave="isHovering=false" class="flex items-center justify-center bg-indigo-500 p-5 rounded-lg">
+  <div class="flex flex-col items-center justify-center">
+      <span id="audio-wave" class="scale-75 transition-opacity duration-150 ease-in-out" :class="{'opacity-100 delay-1000': isHovering, 'opacity-0': !isHovering}"></span>
+      <div class="flex flex-col items-center transition-opacity duration-250 ease-in-out" :class="{'opacity-0 delay-1000': isHovering, 'opacity-100': !isHovering}">
+        <img class="w-10 h-10" src="~assets/thumbnails/audio-thumbnail.svg">
+        <span class="text-xs w-full mt-2 text-center">{{ title }}</span>
+      </div>
+      
+  </div>
+  <audio ref="audioElement" :src="src" alt="image" class="w-full h-full object-cover media" />
 </div>
 </template>
 

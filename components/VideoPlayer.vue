@@ -13,11 +13,19 @@ const videoContainer = ref(null)
 const hover = ref(false)
 const store = useModalStore()
 
+const { showModal: isModalOpen} = storeToRefs(store)
+
 watch(videoElement, (newVal) => {
   if (newVal) {
     newVal.onloadedmetadata = () => {
       duration.value = newVal.duration;
     };
+  }
+});
+
+watch(isModalOpen, (newVal) => {
+  if (newVal === false) {
+    pause()
   }
 });
 
@@ -45,7 +53,10 @@ const onSliderInput = (event) => {
   const time = (event.target.value / 100) * duration.value;
   progressbar.value.style.setProperty("width", `${(time / duration.value) * 100}%`);
   videoElement.value.currentTime = time;
-  audioElement.value.currentTime = time;
+};
+
+const onVolumeChange = (event) => {
+  videoElement.value.volume = event.target.value / 100;
 };
 
 const getBufferedPercentage = () => {
@@ -86,11 +97,6 @@ const toggleMute = () => {
 emit('toggleMute')
 }
 
-
-watch(() => props.isFullscreen, (newValue, oldValue) => {
-// Code to run when myProp changes
-toggleFullScreen()
-});
 
 watch(() => props.mouseOver, (newValue, oldValue) => {
 props.mouseOver === true ? play() : pause()
@@ -149,22 +155,43 @@ const formattedDuration = computed(() => {
         </div>
       </div>
      
-      <div class="player-controls">
-        <div class="progress-bar" ref="progressbar"></div>
-        <input 
-          type="range" 
-          min="0" max="100" 
-          :value="(currentTime / duration) * 100 || 0" 
-          @input="onSliderInput" 
-          @mouseover="toggleInfo"
-          @mouseleave="toggleInfo"
-        />
-        <div id="playback-controls"  class="flex items-center p-4">
-          <div class="mr-4 hover:cursor-pointer">
-            <img v-if="!playing" src="~assets/thumbnails/play-icon.svg" class="w-5" @click="play()"/>
-            <img v-if="playing" src="~assets/thumbnails/pause-icon.svg" class="w-5" @click="pause()"/>
+      <div class="player-controls flex flex-row items-center justify-between">
+        <div id="left-container">
+          <div class="progress-bar" ref="progressbar"></div>
+            <input 
+              type="range" 
+              min="0" max="100" 
+              :value="(currentTime / duration) * 100 || 0" 
+              @input="onSliderInput" 
+              @mouseover="toggleInfo"
+              @mouseleave="toggleInfo"
+            />
+          <div id="playback-controls" class="flex items-center p-4">
+            <div class="mr-4 hover:cursor-pointer">
+              <img v-if="playing===false" src="~assets/thumbnails/play-icon.svg" class="w-5" @click="play()"/>
+              <img v-if="playing===true" src="~assets/thumbnails/pause-icon.svg" class="w-5" @click="pause()"/>
+            </div>
+            <div class="flex items-center w-8">
+              <img class="w-5" src="~assets/thumbnails/sound-icon.svg"/>
+              <input 
+                type="range" 
+                min="0" max="100"
+                name="" 
+                @input="onVolumeChange"
+                id="volume-slider">
+            </div>
+            <div>
+              <span class="text-white text-sm">{{ formattedCurrentTime }} / {{ formattedDuration }}</span>
+            </div>
           </div>
-          <span class="text-white text-sm">{{ formattedCurrentTime }} / {{ formattedDuration }}</span>
+        </div>
+        <div id="right-container">
+          <div class="w-5 mr-5">
+            <img 
+              src="~assets/thumbnails/fullscreen-icon.svg" 
+              @click="toggleFullScreen"
+            >
+          </div>
         </div>
       </div>
     </div>

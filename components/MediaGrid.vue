@@ -36,7 +36,7 @@ watch(files, (newFiles) => {
         // Initialize Masonry only if it hasn't been initialized yet
         msnry = new Masonry(grid, {
           itemSelector: '.grid-item',
-          columnWidth: 200, 
+          columnWidth: 250, 
           fitWidth: true,
           gutter: 10,
           transitionDuration: '0'
@@ -55,21 +55,24 @@ watch(files, (newFiles) => {
 
 
 function handleMediaLoading(container) {
-  const mediaElements = container.querySelectorAll('img, video, audio');
-
+  const mediaElements = container.querySelectorAll('.media');
+  console.log(mediaElements)
   mediaElements.forEach(element => {
     if (element.tagName === 'IMG') {
       // Handle image loading with imagesLoaded
       imagesLoaded(element, () => {
+        element.closest('.grid-item').classList.add('loaded');
         msnry.layout();
       });
     } else if (element.tagName === 'VIDEO' || element.tagName === 'AUDIO') {
-      if (element.readyState > 0) {
+      if (element.readyState > 3) {
         // Media is already loaded
+        element.closest('.grid-item').classList.add('loaded');
         msnry.layout();
       } else {
         // Wait for the media to load
         element.addEventListener('loadedmetadata', () => {
+          element.closest('.grid-item').classList.add('loaded');
           msnry.layout();
         }, { once: true });
       }
@@ -104,13 +107,15 @@ watch(() => router.currentRoute.value.query, (newQuery) => {
           v-for="file in files"
           :key="file"
       >
-        <MediaCard :file=file />
+      <MediaCard :file=file />
       </div>
     </div>
   </div>
 </template>
 
 <style>
+
+/* ---- grid ---- */
 
 .grid {
   /* center */
@@ -127,7 +132,17 @@ watch(() => router.currentRoute.value.query, (newQuery) => {
 /* ---- grid-item ---- */
 
 .grid-item {
-  width: 200px;
+  visibility: hidden; /* The element is not visible, but still takes up space */
+  width: 250px;
   margin-bottom: 10px;
+  opacity: 0; /* Start fully transparent */
+  transition: visibility 0s linear 0.5s, opacity 0.5s linear; /* Adjust transition for visibility */
+}
+
+.grid-item.loaded {
+  visibility: visible; /* Make the element visible */
+  opacity: 1; /* Fully visible */
+  transition-delay: 0s; /* Apply delay to visibility transition when becoming visible */
 }
 </style>
+

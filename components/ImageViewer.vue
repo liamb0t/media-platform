@@ -18,7 +18,7 @@ const zoomOut = () => {
         <img class="h-full" :src=src alt="" @load="store.setLoaded(true)" :style="{ transform: `scale(${scale})` }">
 
         <div class="absolute w-full flex items-center justify-center mt-4">
-            <div class="flex items-center rounded-3xl bg-violet-950 w-fit p-2">
+            <div class="flex items-center rounded-3xl bg-indigo-800 w-fit p-2">
                 <div @click="zoomOut" id="zoom-out" class="hover:cursor-pointer hover:bg-indigo-200 hover:bg-opacity-25 rounded-full">
                     <img class="w-7" src="~assets/thumbnails/minus-icon.svg" alt="">
                 </div>

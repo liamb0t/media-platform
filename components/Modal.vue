@@ -56,6 +56,9 @@ function updateFilePreviewer() {
     previewer.value = ImageViewer;
   }
 }
+
+// WATCHERS 
+
 // watch for changes in selected file and toggle appropriate previewer
 watch(() => filePath.value, (newFilePath, oldPrice) => {
     updateFilePreviewer()
@@ -79,6 +82,12 @@ watch(() => showModal.value, (newVal, oldVal) => {
     }
 });
 
+//computed
+
+const title = computed(() => {
+  return filePath.value.split('/').pop()
+})
+
 </script>
 
 <template>  
@@ -90,17 +99,22 @@ watch(() => showModal.value, (newVal, oldVal) => {
                   <div @click="closeModal" class="flex items-center justify-center mr-2 w-10 h-10 rounded-full hover:bg-indigo-400 hover:bg-opacity-25 hover:cursor-pointer">
                     <img class="w-6" src="~assets/thumbnails/arrow.svg" alt="">
                   </div>
-                  <span class="text-white">{{ filePath }}</span>
+                  <div class="mw-5/8">
+                    <span v-if="filePath" class="text-zinc-300">{{ title }}</span>
+                  </div>
+                 
                 </div>
                 <div @click="download" class="flex items-center justify-center mr-5 w-10 h-10 rounded-full hover:bg-indigo-400 hover:bg-opacity-25 hover:cursor-pointer">
                   <img class="w-6 hover:cursor-pointer" src="~assets/thumbnails/download-icon.svg" alt="">
                 </div>
               </div>
               <div id="modal-content">
-                  <span v-if="!isLoaded" class="loader"></span>
                   <component v-if="previewer" :src="filePath" :is="previewer" />
               </div>
           </div>
+          <span v-if="!isLoaded" class="absolute inset-0 flex justify-center items-center">
+            <div class="loader"></div>
+          </span>
       </div>
   </transition>
 </template>
