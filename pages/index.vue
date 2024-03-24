@@ -7,7 +7,7 @@ const { showModal } = storeToRefs(store)
 <template>
     <div class="flex pt-10">
         <div class="flex flex-col mr-3 ml-4 w-1/6">
-            <h1 class="text-indigo-500 text text-3xl">ZAUBAR</h1>
+            <h1 class="text-indigo-500 text text-3xl">MOXY</h1>
             <Sidebar class="mt-10"/>
         </div>
      
