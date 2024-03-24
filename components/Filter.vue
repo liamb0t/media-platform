@@ -32,41 +32,37 @@ onBeforeUnmount(() => {
       <div class="flex">
           <span class="text-slate-400 font-thin">Type</span>
       </div>
-      <div class="arrow-container">
-        <img class="" src="~assets/thumbnails/arrow.svg" alt="">
+      <div class="arrow-container flex items-center justify-end w-full">
+        <img class="w-5 ml-1" src="~assets/thumbnails/menu-arrow.svg" alt="">
       </div>
     </div>
-    <div v-show="showOptions" class="options">
+    <div v-show="showOptions" class="options bg-zinc-900">
       <ul>
-        <li>
+        <li class="hover:bg-indigo-300 hover:bg-opacity-25">
           <div class="container">
             <div class="container-inner">
-                <img  alt="">
-                <span>Video</span>
+                <span class="text-slate-400 font-light">Video</span>
             </div>
           </div>
         </li>
-        <li>
+        <li class="hover:bg-indigo-300 hover:bg-opacity-25">
           <div class="container">
             <div class="container-inner">
-                <img  alt="">
-                <span>Audio</span>
+                <span class="text-slate-400 font-light">Audio</span>
             </div>
           </div>
         </li>
-        <li>
+        <li class="hover:bg-indigo-300 hover:bg-opacity-25">
           <div class="container">
             <div class="container-inner">
-                <img  alt="">
-                <span>Images</span>
+                <span class="text-slate-400 font-light">Images</span>
             </div>
           </div>
         </li>
-        <li>
+        <li class="hover:bg-indigo-300 hover:bg-opacity-25">
           <div class="container">
             <div class="container-inner">
-                <img  alt="">
-                <span>3D Content</span>
+                <span class="text-slate-400 font-light">3D Content</span>
             </div>
           </div>
         </li>
@@ -78,14 +74,12 @@ onBeforeUnmount(() => {
 .container, .container-active {
     position: relative;
     width: 100%;
-    min-width: 11.5rem;
-    max-width: 10rem;
+    max-width: 8rem;
     border: 1px solid var(--color-border);
     border-radius: 10px;
 }
 
 .container-active {
-  margin-right: 1rem;
   border-radius: 0px;
   border-bottom: none;
   border-top-right-radius: 10px;
@@ -121,7 +115,6 @@ onBeforeUnmount(() => {
   object-fit: contain;
 }
 .options {
-  background-color: var(--color-background);
   position: absolute;
   width: 101%;
   border: 1px solid var(--color-border-strong);
@@ -139,17 +132,12 @@ onBeforeUnmount(() => {
     text-align: left;
 }
 .options span {
-    color: var(--color-text);
-    font-size: smaller;
-    text-align: left;
+  font-size: smaller;
+  text-align: left;
 }
 ul {
 list-style-type: none;
 padding: 0;
-}
-img {
-  height: 10px;
-  width: 10px;;
 }
 @media (max-width: 385px) {
   .container-inner .flex img {

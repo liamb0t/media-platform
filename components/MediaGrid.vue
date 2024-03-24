@@ -19,6 +19,10 @@ let msnry = null;
 let grid = null;
 const files = ref(null)
 
+const props = defineProps({
+  sizeChange: Boolean
+})
+
 onMounted(() => {
   (async () => {  
     files.value = await useAssets();
@@ -56,7 +60,7 @@ watch(files, (newFiles) => {
 
 function handleMediaLoading(container) {
   const mediaElements = container.querySelectorAll('.media');
-  console.log(mediaElements)
+
   mediaElements.forEach(element => {
     if (element.tagName === 'IMG') {
       // Handle image loading with imagesLoaded
@@ -86,17 +90,26 @@ const store = useModalStore()
 const router = useRouter()
 
 const filterMedia = (query) => {
-  files.value = useAssets().filter((file) => file.includes(query))
+  files.value = files.value.filter((file) => file.src.includes(query))
 }
 
 watch(() => router.currentRoute.value.query, (newQuery) => {
   if (newQuery.query) {
     filterMedia(newQuery.query)
     nextTick(() => {
-      
+      msnry.layout();
     });
   }
 })
+
+watch(() => props.sizeChange, (newSize) => {
+  setTimeout(() => {
+    if (msnry) {
+      msnry.layout();
+    }
+  }, 350)
+})  
+
 </script>
 
 <template>

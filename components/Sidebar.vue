@@ -1,12 +1,14 @@
 <template>
     <ul>
         <li>
-            <div class="flex items-center rounded-lg hover:bg-indigo-600 p-3 hover:cursor-pointer">
-                <div class="flex items-center container-inner">
-                    <img src="~assets/thumbnails/home-icon.svg" >
-                    <span class="text-slate-300">Home</span>
+            <a href="/">
+                <div class="flex items-center rounded-lg hover:bg-indigo-600 p-3 hover:cursor-pointer">
+                    <div class="flex items-center container-inner">
+                        <img src="~assets/thumbnails/home-icon.svg" >
+                        <span class="text-slate-300">Home</span>
+                    </div>
                 </div>
-            </div>
+            </a>
         </li>
         <li>
             <div class="flex items-center rounded-lg hover:bg-indigo-600 p-3 hover:cursor-pointer">
