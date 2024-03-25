@@ -19,6 +19,8 @@ export default function useAssets() {
         '/media/3d/bmw_e39_free.glb',
         '/media/3d/cute_breakfast.glb',
         '/media/3d/potions.glb',
+        '/media/3d/lambo.glb',
+        '/media/3d/soulless.glb',
     ]
 
     async function getImage() {

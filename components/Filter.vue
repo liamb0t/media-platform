@@ -1,8 +1,5 @@
 <script setup>
 
-
-
-const route = useRoute()
 const showOptions = ref(false)
 const container = ref(null)
 
@@ -80,10 +77,6 @@ onBeforeUnmount(() => {
 }
 
 .container-active {
-  border-radius: 0px;
-  border-bottom: none;
-  border-top-right-radius: 10px;
-  border-top-left-radius: 10px;
   border: 1px solid var(--color-border-strong);
 }
 
@@ -121,11 +114,7 @@ onBeforeUnmount(() => {
   border-top: none;
   z-index: 999;
   left: -1px;
-  border-bottom-right-radius: 10px;
-  border-bottom-left-radius: 10px;
-}
-:root.dark .options {
-  background-color: var(--color-background-mute);
+  border-radius: 10px;
 }
 .legend {
     padding: 0.5rem 1rem;
@@ -143,6 +132,9 @@ padding: 0;
   .container-inner .flex img {
     display: none;
   }
+}
+li {
+  border-radius: 10px;
 }
 </style>
 

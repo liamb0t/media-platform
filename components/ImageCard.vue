@@ -2,13 +2,15 @@
 
 const props = defineProps(['src'])
 const isHovering = ref(false)
+const store = useModalStore()
+const {showModal} = storeToRefs(store)
 let playTimeout = null // Changed to let for reassignment
 
 function handleMouseOver() {
     // Initialize the timeout to change isHovering to true after 1 second
     playTimeout = setTimeout(() => {
         isHovering.value = true
-    }, 500)
+    }, 1000)
 }
 
 function handleMouseLeave() {
@@ -21,7 +23,7 @@ function handleMouseLeave() {
 
 <template>
 <div @mouseover="handleMouseOver" @mouseleave="handleMouseLeave">
-    <img :src=src class="w-full h-full object-cover rounded-lg media transition-transform duration-100" :class="{'scale-[1.7] z-50': isHovering}"/>
+    <img :src=src class="relative w-full h-full object-cover rounded-lg media transition-transform duration-100" :class="{'scale-[1.7] z-50': isHovering && !showModal}"/>
 </div>
 </template>
 

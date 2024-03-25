@@ -17,14 +17,14 @@ const { showModal } = storeToRefs(store)
         
         <transition name="slide">
             <div class="relative flex flex-col mr-6 ml-4 w-1/6" id="sidebar" v-if="openedSidebar">
-                <h1 class="text-indigo-400 text text-5xl font-thin">MOXY</h1>
+                <h1 class="text-indigo-400 text text-5xl font-thin">media</h1>
                 <Sidebar class="mt-10"/>
             </div>
         </transition>
 
         <transition name="slide">
             <div class="fixed h-full z-50 bg-zinc-900 hidden flex-col mr-6 pl-4 w-2/6" id="sidebar-secondary">
-                <h1 class="text-indigo-500 text text-3xl">MOXY</h1>
+                <h1 class="text-indigo-500 text text-3xl">media</h1>
                 <Sidebar class="mt-10"/>
             </div>
         </transition>
