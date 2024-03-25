@@ -4,7 +4,7 @@ const props = defineProps(['src'])
 const isHovering = ref(false)
 const store = useModalStore()
 const {showModal} = storeToRefs(store)
-let playTimeout = null // Changed to let for reassignment
+let playTimeout = null 
 
 function handleMouseOver() {
     // Initialize the timeout to change isHovering to true after 1 second

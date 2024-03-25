@@ -18,7 +18,7 @@ watch(isHovering, (newValue) => {
     // User stopped hovering, stop playback immediately and clear the timeout
     clearTimeout(playTimeout);
     audioElement.value.pause();
-    audioElement.value.currentTime = 0; // Optionally reset audio to start
+    audioElement.value.currentTime = 0; // reset audio to start
   }
 });
 

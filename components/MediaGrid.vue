@@ -23,6 +23,46 @@ const props = defineProps({
   sizeChange: Boolean
 })
 
+// functions 
+
+const filterMedia = (query) => {
+  files.value = files.value.filter((file) => file.src.includes(query))
+}
+
+function handleMediaLoading(container) {
+  const mediaElements = container.querySelectorAll('.media');
+
+  mediaElements.forEach(element => {
+    if (element.tagName === 'IMG') {
+      // Handle image loading with imagesLoaded
+      imagesLoaded(element, () => {
+        element.closest('.grid-item').classList.add('loaded');
+        msnry.layout();
+      });
+    } else if (element.tagName === 'VIDEO' || element.tagName === 'AUDIO') {
+      if (element.readyState > 3) {
+        // Media is already loaded
+        element.closest('.grid-item').classList.add('loaded');
+        msnry.layout();
+      } else {
+        // Wait for the media to load
+        element.addEventListener('loadedmetadata', () => {
+          element.closest('.grid-item').classList.add('loaded');
+          msnry.layout();
+        }, { once: true });
+      }
+    }
+  });
+}
+
+// stores
+
+const store = useModalStore()
+
+const router = useRouter()
+
+// watchers and hooks
+
 onMounted(() => {
   (async () => {  
     files.value = await useAssets();
@@ -57,41 +97,6 @@ watch(files, (newFiles) => {
   }
 }, { immediate: true });
 
-
-function handleMediaLoading(container) {
-  const mediaElements = container.querySelectorAll('.media');
-
-  mediaElements.forEach(element => {
-    if (element.tagName === 'IMG') {
-      // Handle image loading with imagesLoaded
-      imagesLoaded(element, () => {
-        element.closest('.grid-item').classList.add('loaded');
-        msnry.layout();
-      });
-    } else if (element.tagName === 'VIDEO' || element.tagName === 'AUDIO') {
-      if (element.readyState > 3) {
-        // Media is already loaded
-        element.closest('.grid-item').classList.add('loaded');
-        msnry.layout();
-      } else {
-        // Wait for the media to load
-        element.addEventListener('loadedmetadata', () => {
-          element.closest('.grid-item').classList.add('loaded');
-          msnry.layout();
-        }, { once: true });
-      }
-    }
-  });
-}
-
-// stores
-const store = useModalStore()
-
-const router = useRouter()
-
-const filterMedia = (query) => {
-  files.value = files.value.filter((file) => file.src.includes(query))
-}
 
 watch(() => router.currentRoute.value.query, (newQuery) => {
   if (newQuery.query) {

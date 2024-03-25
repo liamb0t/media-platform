@@ -24,24 +24,23 @@ export default function useAssets() {
     ]
 
     async function getImage() {
-        // Use the API to fetch a list of videos. This is a pseudo-code example.
         const response = await fetch('https://pixabay.com/api/?key=43031433-029941f53faf5840b7cb720a5&q=cyberpunk&image_type=photo', {
             
         });
         const data = await response.json();
 
-        // Randomly select one video from the fetched list.
+        // Randomly select one image from the fetched list.
         const randomIndex = Math.floor(Math.random() * data.hits.length);
         const image = data.hits[randomIndex];
        
         return {
             'fileType': 'image',
-            'src': image.largeImageURL // Selecting the first video link. Adjust as needed.
+            'src': image.largeImageURL
         };
     }
 
     async function getVideoItem() {
-        // Use the API to fetch a list of videos. This is a pseudo-code example.
+
         const response = await fetch('https://pixabay.com/api/videos/?key=43031433-029941f53faf5840b7cb720a5&q=cyberpunk', {
             
         });
@@ -53,12 +52,11 @@ export default function useAssets() {
 
         return {
             'fileType': 'video',
-            'src': video.videos.medium.url // Selecting the first video link. Adjust as needed.
+            'src': video.videos.medium.url
         };
     }
 
     function getAudioItem() {
-        // Use the API to fetch a list of videos. This is a pseudo-code example.
         const randomIndex = Math.floor(Math.random() * audioLinks.length);
         const track = audioLinks[randomIndex];
         return {
@@ -69,7 +67,6 @@ export default function useAssets() {
     }
 
     function get3DItem() {
-        // Use the API to fetch a list of videos. This is a pseudo-code example.
         const randomIndex = Math.floor(Math.random() * threeDLinks.length);
         const tdobject = threeDLinks[randomIndex];
         return {
