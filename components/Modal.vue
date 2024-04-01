@@ -9,6 +9,7 @@ const store = useModalStore()
 const { filePath, fileType, isLoaded, showModal } = storeToRefs(store)
 
 //methods and functions
+
 function closeModal() {
   store.closeModal()
 }

@@ -82,5 +82,4 @@ const progressWidth = computed(() => {
   height: 100%;
   background: white;
 }
-
 </style>

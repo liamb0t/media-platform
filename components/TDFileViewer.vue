@@ -21,6 +21,7 @@ const store = useModalStore()
     <model-viewer @load="store.setLoaded(true)" :src=src ar shadow-intensity="1" camera-controls touch-action="pan-y"></model-viewer>
   </div>
 </template>
+
 <style scoped>
 model-viewer {
   display: block;

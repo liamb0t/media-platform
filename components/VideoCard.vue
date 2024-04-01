@@ -8,27 +8,6 @@ const props = defineProps(['src', 'title'])
 const videoElement = ref(null);
 const isHovering = ref(false);
 
-// functions
-const play = () => {
-    videoElement.value.play();
-};
-
-const pause = () => {
-    videoElement.value.pause();
-};
-
-const startPreview = () => {
-    setTimeout(() => {
-        videoElement.value.currentTime = 0;
-        play();
-    }, 1000);
-};
-
-const stopPreview = () => {
-    pause();
-    videoElement.value.currentTime = 0;
-};
-
 //watchers 
 
 let playTimeout = null;
